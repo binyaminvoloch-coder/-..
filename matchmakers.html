@@ -11,29 +11,25 @@
         .font-alef { font-family: 'Alef', sans-serif; }
         .modal { transition: opacity 0.25s ease; }
         body.modal-active { overflow: hidden; }
-        .card-item { display: none; }
+        .card-item { display: block; }
     </style>
 </head>
 <body>
 
     <!-- דף כניסה (סיסמה) -->
     <div id="loginBlock" class="fixed inset-0 flex items-center justify-center bg-slate-900 z-50">
-        <div class="bg-white p-10 rounded-2xl shadow-2xl w-80 text-center border-t-8 border-blue-600">
+        <div class="bg-white p-10 rounded-2xl shadow-2xl w-80 text-center">
             <h2 class="text-2xl font-bold mb-6 text-slate-800 font-alef">כניסת שדכנים</h2>
             <input type="password" id="passInput" placeholder="סיסמה" class="w-full p-3 border rounded-lg mb-4 text-center outline-none focus:border-blue-500">
-            <button onclick="login()" class="w-full bg-slate-800 text-white p-3 rounded-lg font-bold hover:bg-slate-700 transition shadow-lg">כניסה למערכת</button>
-            <p class="mt-4 text-[10px] text-gray-400">הגישה מורשית לצוות האתר בלבד | מאובטח</p>
+            <button onclick="login()" class="w-full bg-slate-800 text-white p-3 rounded-lg font-bold hover:bg-slate-700 transition">כניסה</button>
         </div>
     </div>
 
-    <!-- לוח בקרה שדכנים -->
+    <!-- לוח בקרה -->
     <div id="adminContent" class="hidden min-h-screen">
         <header class="bg-white border-b p-6 sticky top-0 z-40 shadow-sm">
             <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <span class="text-red-500 text-2xl animate-pulse">♥</span>
-                    <h1 class="text-2xl font-bold font-alef text-slate-800 tracking-tight">ניהול מאגר "מלב אל לב"</h1>
-                </div>
+                <h1 class="text-2xl font-bold font-alef text-slate-800 tracking-tight">ניהול מאגר "מלב אל לב"</h1>
                 <div class="flex gap-3">
                     <button onclick="loadData('boys')" id="btnBoys" class="px-6 py-2 rounded-full border-2 border-blue-600 text-blue-600 font-bold hover:bg-blue-600 hover:text-white transition uppercase text-sm">מאגר בנים</button>
                     <button onclick="loadData('girls')" id="btnGirls" class="px-6 py-2 rounded-full border-2 border-orange-600 text-orange-600 font-bold hover:bg-orange-600 hover:text-white transition uppercase text-sm">מאגר בנות</button>
@@ -43,13 +39,12 @@
         </header>
 
         <div class="container mx-auto p-6">
-            <div class="bg-white p-4 rounded-2xl shadow-sm mb-8 flex items-center border border-slate-100">
-                <span class="ml-3 text-gray-400">🔍</span>
-                <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="חיפוש חופשי (שם, עיר, מגזר, תכונות אופי...)" class="w-full bg-transparent border-none outline-none text-lg">
+            <div class="bg-white p-4 rounded-2xl shadow-sm mb-8 border border-slate-100">
+                <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="חיפוש לפי שם, עיר, מגזר..." class="w-full bg-transparent border-none outline-none text-lg">
             </div>
             
             <div id="cardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="col-span-full text-center py-20 text-slate-400 font-medium italic">בחר מאגר למעלה כדי לצפות במועמדים</div>
+                <div class="col-span-full text-center py-20 text-slate-400 font-medium italic">לחץ על אחד המאגרים למעלה</div>
             </div>
         </div>
     </div>
@@ -64,14 +59,10 @@
                     <button onclick="closeModal()" class="text-3xl text-gray-400 hover:text-black">&times;</button>
                 </div>
                 <div class="p-8 flex flex-col md:flex-row gap-8">
-                    <!-- צד ימין: תמונה גדולה בתוך המודל -->
                     <div class="md:w-1/3">
-                        <img id="modalImg" src="" class="w-full rounded-2xl shadow-md border-4 border-slate-50 object-cover aspect-[3/4]" onerror="this.src='https://via.placeholder.com/400x500?text=אין+תמונה'">
+                        <img id="modalImg" src="" class="w-full rounded-2xl shadow-md border-2 border-slate-50 object-cover aspect-[3/4]" onerror="this.src='https://via.placeholder.com/400x500?text=אין+תמונה'">
                     </div>
-                    <!-- צד שמאל: נתונים -->
-                    <div id="modalBody" class="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <!-- הפרטים יוזרקו כאן -->
-                    </div>
+                    <div id="modalBody" class="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
                 </div>
             </div>
         </div>
@@ -87,19 +78,23 @@
     let currentData = [];
 
     function login() {
-        const pass = document.getElementById('passInput').value;
-        if(pass === '1234') {
+        if(document.getElementById('passInput').value === '1234') {
             document.getElementById('loginBlock').classList.add('hidden');
             document.getElementById('adminContent').classList.remove('hidden');
         } else { alert('סיסמה שגויה'); }
     }
 
-    // פונקציה שהופכת לינק של גוגל דרייב לתמונה שאפשר לראות
-    function formatDriveLink(url) {
-        if (!url) return '';
+    // הפונקציה הקריטית - מתקנת לינקים של גוגל דרייב לתצוגה באתר
+    function fixDriveUrl(url) {
+        if (!url || url.trim() === "" || url === "אין תמונה") return "https://via.placeholder.com/400x300?text=אין+תמונה";
         if (url.includes('drive.google.com')) {
-            const id = url.split('id=')[1] || url.split('/d/')[1].split('/')[0];
-            return `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
+            let fileId = "";
+            if (url.includes('id=')) {
+                fileId = url.split('id=')[1].split('&')[0];
+            } else {
+                fileId = url.split('/d/')[1].split('/')[0];
+            }
+            return `https://lh3.googleusercontent.com/u/0/d/${fileId}=w800-h800-no`;
         }
         return url;
     }
@@ -122,69 +117,62 @@
 
     async function loadData(type) {
         const container = document.getElementById('cardsContainer');
-        container.innerHTML = '<div class="col-span-full text-center py-20 animate-pulse">טוען נתונים מהמאגר...</div>';
+        container.innerHTML = '<div class="col-span-full text-center py-20 animate-pulse font-bold">מתחבר למאגר...</div>';
         
         const url = type === 'boys' ? CONFIG.boysUrl : CONFIG.girlsUrl;
 
         try {
-            const response = await fetch(url + '&t=' + new Date().getTime());
+            const response = await fetch(url + '&cache=' + new Date().getTime());
             const text = await response.text();
             const lines = text.split(/\r?\n/);
             
             currentHeaders = parseCSVLine(lines[0]);
             currentData = lines.slice(1).map(line => parseCSVLine(line)).filter(row => row.length > 1);
             
-            // מציאת מספרי העמודות לפי הכותרת
             const nameIdx = currentHeaders.indexOf('שם מלא');
             const ageIdx = currentHeaders.indexOf('שנת לידה / גיל');
             const cityIdx = currentHeaders.indexOf('מקום מגורים');
             const photoIdx = currentHeaders.indexOf('תמונה');
-            const sectorIdx = currentHeaders.indexOf('מגזר / זרם');
 
             container.innerHTML = '';
             
             currentData.forEach((row, index) => {
-                const photo = formatDriveLink(row[photoIdx]);
+                const photoUrl = fixDriveUrl(row[photoIdx]);
                 const card = document.createElement('div');
-                card.className = 'bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300 card-item block';
+                card.className = 'bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300 card-item';
                 card.innerHTML = `
-                    <div class="h-64 bg-slate-100 relative">
-                        <img src="${photo}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x300?text=אין+תמונה'">
-                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-slate-700 shadow-sm border border-white">${row[sectorIdx] || 'מגזר'}</div>
+                    <div class="h-64 bg-slate-200 overflow-hidden">
+                        <img src="${photoUrl}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300?text=אין+תמונה'">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-slate-800 mb-1">${row[nameIdx] || 'ללא שם'}, ${row[ageIdx] || ''}</h3>
                         <p class="text-slate-500 text-sm mb-6">📍 ${row[cityIdx] || ''}</p>
-                        <button onclick="openModal(${index}, ${photoIdx})" class="w-full py-3 bg-slate-800 text-white rounded-2xl font-bold text-sm hover:bg-slate-700 transition">לכל הפרטים</button>
+                        <button onclick="openModal(${index}, ${photoIdx})" class="w-full py-3 bg-slate-800 text-white rounded-2xl font-bold hover:bg-slate-700 transition">לכל הפרטים</button>
                     </div>
                 `;
                 container.appendChild(card);
             });
         } catch (e) {
-            container.innerHTML = '<div class="col-span-full text-center py-20 text-red-500">שגיאה בטעינת הקובץ. וודא שהוא מפורסם כ-CSV.</div>';
+            container.innerHTML = '<div class="col-span-full text-center py-20 text-red-500 font-bold">שגיאה בגישה לאקסל. וודא שהוא פורסם כ-CSV.</div>';
         }
     }
 
     function openModal(index, photoIdx) {
         const row = currentData[index];
         const body = document.getElementById('modalBody');
-        const modalName = document.getElementById('modalName');
         const modalImg = document.getElementById('modalImg');
         
-        modalName.innerText = row[currentHeaders.indexOf('שם מלא')];
-        modalImg.src = formatDriveLink(row[photoIdx]);
+        document.getElementById('modalName').innerText = row[currentHeaders.indexOf('שם מלא')];
+        modalImg.src = fixDriveUrl(row[photoIdx]);
         body.innerHTML = '';
 
         currentHeaders.forEach((header, i) => {
             const val = row[i];
-            // מציג רק שדות שיש בהם תוכן ולא קישורים
             if (val && val.trim() !== "" && !val.startsWith('http') && header !== 'שם מלא') {
                 const info = document.createElement('div');
                 info.className = 'bg-slate-50 p-4 rounded-xl border border-slate-100';
-                info.innerHTML = `
-                    <span class="block text-[10px] font-bold text-slate-400 mb-1 leading-none uppercase tracking-wider">${header}</span>
-                    <span class="text-slate-700 font-medium">${val}</span>
-                `;
+                info.innerHTML = `<span class="block text-[10px] font-bold text-slate-400 mb-1 uppercase tracking-wider">${header}</span>
+                                  <span class="text-slate-700 font-medium">${val}</span>`;
                 body.appendChild(info);
             }
         });
