@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מלב אל לב - תשלום מאובטח</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Alef:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Assistant', sans-serif; background-color: #f8fafc; }
+        .font-serif-hebrew { font-family: 'Alef', serif; }
+        .payment-card { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        input:focus { border-color: #1e3a8a; outline: none; ring: 2px; ring-color: #1e3a8a; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="mb-8 text-center">
+        <h1 class="text-3xl font-bold text-blue-900 font-serif-hebrew flex items-center justify-center gap-2">
+            <span class="text-red-500 text-2xl">♥</span> מלב אל לב
+        </h1>
+        <p class="text-slate-500 mt-2">השלמת הרשמה למסלול ליווי אישי</p>
+    </div>
+
+    <div class="max-w-4xl w-full grid md:grid-cols-3 gap-0 payment-card rounded-3xl overflow-hidden bg-white border border-slate-100">
+        <!-- Sidebar -->
+        <div class="bg-blue-900 p-8 text-white md:col-span-1">
+            <h2 class="text-xl font-bold mb-6 border-b border-blue-700 pb-4">סיכום מנוי</h2>
+            <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <span>מסלול ליווי שדכן</span>
+                    <span class="font-bold">40 ₪</span>
+                </div>
+                <div class="flex justify-between items-center text-sm opacity-80">
+                    <span>תדירות</span>
+                    <span>חודשי</span>
+                </div>
+                <div class="pt-4 border-t border-blue-700 mt-4 text-2xl font-bold flex justify-between">
+                    <span>סה"כ:</span>
+                    <span>40 ₪</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form - מוביל לדף success.html -->
+        <div class="p-8 md:p-12 md:col-span-2">
+            <h2 class="text-2xl font-bold text-slate-800 mb-8 font-serif-hebrew">פרטי תשלום מאובטח</h2>
+            <form action="success.html" method="GET" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-2">שם בעל הכרטיס</label>
+                    <input type="text" required class="w-full p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-900/10">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-2">מספר תעודת זהות</label>
+                    <input type="text" required class="w-full p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-900/10">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-2">מספר כרטיס אשראי</label>
+                    <input type="text" required placeholder="**** **** **** ****" class="w-full p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-900/10">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-600 mb-2">תוקף MM/YY</label>
+                        <input type="text" required placeholder="05/28" class="w-full p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-900/10">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-600 mb-2">CVV</label>
+                        <input type="text" required placeholder="3 ספרות" class="w-full p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-900/10">
+                    </div>
+                </div>
+                <div class="pt-6">
+                    <button type="submit" class="w-full bg-blue-900 text-white py-4 rounded-xl font-bold text-xl shadow-lg hover:bg-blue-800 transition transform hover:-translate-y-1">
+                        אשר תשלום והשלם רישום
+                    </button>
+                    <p class="text-center text-gray-400 text-xs mt-4">🔒 המידע שלך מוצפן ומאובטח בתקן PCI</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

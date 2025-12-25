@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>איך זה עובד? - מלב אל לב</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Alef:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Assistant', sans-serif; background-color: #fcfbf9; }
+        .font-serif-hebrew { font-family: 'Alef', serif; }
+        .bg-navy { background-color: #1a365d; }
+        .text-gold { color: #C5A028; }
+        .border-gold { border-color: #C5A028; }
+        .card-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Hero -->
+    <header class="bg-navy py-12 px-6 text-center text-white relative">
+        <a href="index.html" class="absolute top-6 right-6 text-white/70 hover:text-white transition flex items-center gap-2">
+            <span>→ חזרה לבית</span>
+        </a>
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold font-serif-hebrew mb-6">יותר מאתר – שדכן אישי שמלווה אותך</h1>
+            <p class="text-xl opacity-90 leading-relaxed font-light">
+                במקום לדפדף בין מאות פרופילים, אנחנו מציעים לך שליח שפועל עבורך בנאמנות ובמקצועיות כדי למצוא את החצי השני.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 -mt-10">
+        <!-- Main Service Card -->
+        <div class="bg-white rounded-3xl p-8 md:p-12 card-shadow border border-stone-100">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-navy mb-6 font-serif-hebrew">למה אנחנו עובדים אחרת?</h2>
+                    <p class="text-gray-700 text-lg mb-6 leading-relaxed">
+                        אנחנו מאמינים ששידוך הוא לא עניין למכונות. בניין עדי עד דורש הבנה של הלב, של השאיפות הרוחניות ושל ניואנסים שרק עין אנושית יכולה לראות.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <span class="text-gold text-xl">✔</span>
+                            <p class="font-medium">שדכן אנושי שעובר על כל הצעה באופן ידני.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-gold text-xl">✔</span>
+                            <p class="font-medium">סינון מקדים שחוסך ממך פגישות לא רלוונטיות.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-gold text-xl">✔</span>
+                            <p class="font-medium">ליווי, ייעוץ וזמינות לכל שאלה במהלך הקשר.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-stone-50 rounded-2xl p-8 border-2 border-dashed border-gold flex flex-col items-center text-center">
+                    <div class="text-sm font-bold text-navy mb-2 tracking-widest uppercase">המסלול המלא</div>
+                    <div class="text-6xl font-bold text-navy mb-2">40 ₪</div>
+                    <div class="text-lg font-medium text-gray-600 mb-6">לחודש בלבד</div>
+                    <p class="text-sm text-gray-500 mb-8 italic">
+                        העלות נועדה לאפשר לשדכנים שלנו לעבוד עבורך במשרה מלאה ולהבטיח שרק מועמדים רציניים יצטרפו למיזם.
+                    </p>
+                    
+                    <!-- בחירת מגדר להרשמה -->
+                    <div class="flex flex-col w-full gap-3">
+                        <a href="register-male.html" class="w-full py-4 bg-navy text-white rounded-xl font-bold text-xl hover:scale-105 transition shadow-lg text-center">אני בחור - להרשמה</a>
+                        <a href="register-female.html" class="w-full py-4 bg-[#8B5E34] text-white rounded-xl font-bold text-xl hover:scale-105 transition shadow-lg text-center">אני בחורה - להרשמה</a>
+                    </div>
+                    
+                    <p class="mt-4 text-xs text-gray-400 font-light italic">ללא התחייבות – ניתן לבטל בכל עת</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How it works steps -->
+        <section class="py-20">
+            <h3 class="text-2xl font-bold text-center text-navy mb-12 font-serif-hebrew underline decoration-gold decoration-4 underline-offset-8">איך זה עובד בפועל?</h3>
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Step 1 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white border-2 border-gold rounded-full flex items-center justify-center mx-auto mb-4 text-navy font-bold text-xl shadow-sm">1</div>
+                    <h4 class="font-bold mb-2">נרשמים</h4>
+                    <p class="text-sm text-gray-600 italic">ממלאים את השאלון המפורט שבנינו עבורך.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white border-2 border-gold rounded-full flex items-center justify-center mx-auto mb-4 text-navy font-bold text-xl shadow-sm">2</div>
+                    <h4 class="font-bold mb-2">נפגשים (טלפונית)</h4>
+                    <p class="text-sm text-gray-600 italic">שיחת היכרות קצרה עם שדכן/ית להעמקת הפרופיל.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white border-2 border-gold rounded-full flex items-center justify-center mx-auto mb-4 text-navy font-bold text-xl shadow-sm">3</div>
+                    <h4 class="font-bold mb-2">מאתרים התאמות</h4>
+                    <p class="text-sm text-gray-600 italic">השדכנים שלנו מחפשים במאגר את החיבור המדויק עבורך.</p>
+                </div>
+                <!-- Step 4 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white border-2 border-gold rounded-full flex items-center justify-center mx-auto mb-4 text-navy font-bold text-xl shadow-sm">4</div>
+                    <h4 class="font-bold mb-2">יוצאים לדרך</h4>
+                    <p class="text-sm text-gray-600 italic">מקבלים הצעה, מאשרים ויוצאים לפגישה בלב שקט.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quote -->
+        <section class="bg-white p-10 rounded-2xl italic text-center text-navy/80 border border-stone-100 mb-20 shadow-sm">
+            <p class="text-xl">
+                "עמלנו הוא להפוך כל אבן, להקשיב לכל לב, ולעשות את ההשתדלות המקסימלית כדי שהקב"ה ישרה שכינתו ביניכם."
+            </p>
+            <p class="mt-4 font-bold text-gold">— צוות שדכני 'מלב אל לב'</p>
+        </section>
+    </main>
+
+    <!-- Simple Footer -->
+    <footer class="py-10 text-center text-gray-500 text-sm">
+        <p>© כל הזכויות שמורות למלב אל לב | פלטפורמת שידוכים תורנית</p>
+    </footer>
+
+</body>
+</html>

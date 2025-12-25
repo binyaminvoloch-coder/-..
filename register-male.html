@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מלב אל לב - שאלון הרשמה לבחור</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Alef:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Assistant', sans-serif; background-color: #f4f7f9; color: #1e293b; }
+        .font-serif-hebrew { font-family: 'Alef', serif; }
+        .form-section { background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 2rem; border-top: 4px solid #1e3a8a; }
+        .input-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        label { font-weight: 600; font-size: 0.9rem; color: #334155; }
+        input, select, textarea { border: 1px solid #cbd5e1; padding: 0.6rem; border-radius: 0.5rem; width: 100%; transition: all 0.2s; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #1e3a8a; ring: 2px; ring-color: #1e3a8a; }
+        .section-title { font-size: 1.5rem; font-weight: bold; color: #1e3a8a; margin-bottom: 1.5rem; display: flex; items-center: center; gap: 0.5rem; }
+    </style>
+</head>
+<body class="py-10 px-4 md:px-0 relative">
+
+    <a href="about.html" class="fixed top-4 left-4 bg-white/80 backdrop-blur px-4 py-2 rounded-full shadow-sm text-sm font-bold text-blue-900 border border-blue-100 hover:bg-white transition z-50">
+        ← חזרה
+    </a>
+
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-blue-900 font-serif-hebrew mb-2">שאלון הצטרפות - בחור</h1>
+            <p class="text-slate-500 italic">"וְזַכֵּנִי לְהָקִים בַּיִת נֶאֱמָן בְּיִשְׂרָאֵל, בַּיִת שֶׁל תּוֹרָה וּמִצְוֹת"</p>
+        </div>
+
+        <form>
+            <!-- 1. פרטים כלליים -->
+            <div class="form-section">
+                <h2 class="section-title"><span>👤</span> פרטים כלליים</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="input-group"><label>שם מלא *</label><input type="text" name="שם מלא" required></div>
+                    <div class="input-group"><label>שנת לידה / גיל *</label><input type="text" name="שנת לידה / גיל" required></div>
+                    <div class="input-group">
+                        <label>מצב משפחתי</label>
+                        <select name="מצב משפחתי"><option>רווק</option><option>גרוש</option><option>אלמן</option></select>
+                    </div>
+                    <div class="input-group">
+                        <label>מגזר / זרם</label>
+                        <select name="מגזר / זרם">
+                            <option>חרד"ל</option>
+                            <option>תורני</option>
+                            <option>תורני-פתוח</option>
+                            <option>דתי-לאומי</option>
+                        </select>
+                    </div>
+                    <div class="input-group"><label>רקע משפחתי</label><input type="text" name="רקע משפחתי"></div>
+                    <div class="input-group"><label>מקום מגורים</label><input type="text" name="מקום מגורים"></div>
+                    <div class="input-group"><label>אזור מגורים עתידי</label><input type="text" name="אזור מגורים עתידי"></div>
+                    <div class="input-group"><label>מצב בריאות</label><input type="text" name="מצב בריאות"></div>
+                    <div class="input-group"><label>גובה</label><input type="text" name="גובה"></div>
+                    <div class="input-group"><label>העלאת תמונה (דיסקרטי)</label><input type="file" class="text-sm"></div>
+                </div>
+            </div>
+
+            <!-- 2. עולם דתי -->
+            <div class="form-section">
+                <h2 class="section-title"><span>📖</span> עולם רוחני</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="input-group"><label>רמת שמירת מצוות</label><input type="text" name="רמת שמירת מצוות"></div>
+                    <div class="input-group">
+                        <label>הקפדה הלכתית</label>
+                        <select name="הקפדה הלכתית"><option>בסיסית</option><option>מאוזנת</option><option>מחמירה</option></select>
+                    </div>
+                    <div class="input-group"><label>מסגרת לימודית (ישיבה תיכונית/גבוהה/הסדר)</label><input type="text" name="מסגרת לימודית"></div>
+                    <div class="input-group"><label>לימוד תורה בהווה</label><input type="text" name="לימוד תורה בהווה"></div>
+                    <div class="input-group"><label>שאיפות רוחניות</label><textarea name="שאיפות רוחניות" class="h-20"></textarea></div>
+                    <div class="input-group"><label>יחס לשירות</label><input type="text" name="יחס לשירות"></div>
+                    <div class="input-group md:col-span-2"><label>השקפה כללית</label><textarea name="השקפה כללית" class="h-20"></textarea></div>
+                </div>
+            </div>
+
+            <!-- 3. השכלה ועיסוק -->
+            <div class="form-section">
+                <h2 class="section-title"><span>🎓</span> השכלה ועיסוק</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="input-group"><label>רמת השכלה</label><input type="text" name="רמת השכלה"></div>
+                    <div class="input-group"><label>תחום לימודים</label><input type="text" name="תחום לימודים"></div>
+                    <div class="input-group"><label>עיסוק נוכחי</label><input type="text" name="עיסוק נוכחי"></div>
+                    <div class="input-group"><label>יציבות תעסוקתית</label><input type="text" name="יציבות תעסוקתית"></div>
+                </div>
+            </div>
+
+            <!-- 4. משפחה ואופי -->
+            <div class="form-section">
+                <h2 class="section-title"><span>🏠</span> משפחה ואישיות</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="input-group"><label>מספר אחים</label><input type="text" name="מספר אחים"></div>
+                    <div class="input-group"><label>סגנון הבית</label><input type="text" name="סגנון הבית"></div>
+                    <div class="input-group md:col-span-2"><label>אופי (תכונות בולטות)</label><textarea name="אופי" class="h-24"></textarea></div>
+                    <div class="input-group"><label>תחומי עניין</label><input type="text" name="תחומי עניין"></div>
+                </div>
+            </div>
+
+            <!-- 5. דרישות -->
+            <div class="form-section">
+                <h2 class="section-title"><span>💍</span> מה אני מחפש?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="input-group"><label>מה מחפש בבת זוג</label><textarea name="מה מחפש בבת זוג" class="h-24"></textarea></div>
+                    <div class="input-group"><label>שאיפות לבית</label><textarea name="שאיפות לבית" class="h-24"></textarea></div>
+                    <div class="input-group"><label>קווים אדומים</label><input type="text" name="קווים אדומים"></div>
+                    <div class="input-group">
+                        <label>פתיחות לליווי</label>
+                        <select name="פתיחות לליווי"><option>כן</option><option>לא</option><option>אולי</option></select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. קשר -->
+            <div class="form-section">
+                <h2 class="section-title"><span>📞</span> פרטים ליצירת קשר</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="input-group"><label>טלפון *</label><input type="tel" name="טלפון" required></div>
+                    <div class="input-group"><label>אימייל *</label><input type="email" name="אימייל" required></div>
+                    <div class="input-group md:col-span-2"><label>הערות קשר</label><input type="text" name="הערות קשר"></div>
+                </div>
+            </div>
+
+            <div class="text-center mb-20">
+                <button type="submit" class="bg-blue-900 text-white px-16 py-4 rounded-full font-bold text-xl shadow-2xl hover:bg-blue-800 transition transform hover:scale-105 w-full md:w-auto">
+                    המשך לתשלום והשלמת רישום
+                </button>
+            </div>
+        </form>
+    </div>
+
+<script>
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwWQuLcLEQJcSd7k50mZ9xxXewlj7hOY-W7akqNnCWJT6rh5QFZYgtNw84_mmOmSVos/exec';
+const form = document.querySelector('form');
+
+form.addEventListener('submit', e => {
+    e.preventDefault();
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = "שומר נתונים...";
+
+    const fileInput = form.querySelector('input[type="file"]');
+    const file = fileInput.files[0];
+    
+    const sendToGoogle = (imageContent = null, mimeType = null) => {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        data.gender = 'male';
+        if (imageContent) {
+            data.imageContent = imageContent;
+            data.imageMimeType = mimeType;
+        }
+
+        fetch(scriptURL, { method: 'POST', body: JSON.stringify(data)})
+            .then(res => res.json())
+            .then(response => {
+                if(response.result === 'success') window.location.href = 'payment.html';
+                else { alert("שגיאה: " + response.error); submitBtn.disabled = false; }
+            })
+            .catch(error => { alert("שגיאה בחיבור"); submitBtn.disabled = false; });
+    };
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = () => sendToGoogle(reader.result.split(',')[1], file.type);
+        reader.readAsDataURL(file);
+    } else {
+        sendToGoogle();
+    }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אזור שדכנים - מלב אל לב</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&family=Alef:wght@700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#1a365d] h-screen flex items-center justify-center font-['Assistant']">
+    
+    <!-- Login Block -->
+    <div id="loginBlock" class="bg-white p-10 rounded-2xl shadow-2xl w-96 text-center border-t-8 border-gold">
+        <h2 class="text-2xl font-bold mb-6 text-blue-900 font-['Alef']">כניסת שדכנים</h2>
+        <input type="password" id="pass" placeholder="הכנס סיסמה" class="w-full p-3 border rounded-lg mb-4 text-center text-xl">
+        <button onclick="checkPass()" class="w-full bg-[#1a365d] text-white p-3 rounded-lg font-bold hover:bg-blue-800 transition">כניסה למערכת</button>
+        <a href="index.html" class="block mt-4 text-xs text-gray-400 hover:underline">חזרה לאתר</a>
+    </div>
+
+    <!-- Admin Content -->
+    <div id="adminContent" class="hidden bg-white p-10 rounded-2xl shadow-2xl w-full max-w-2xl text-center">
+        <h2 class="text-3xl font-bold text-blue-900 mb-4 font-['Alef']">ברוכים הבאים, צוות שדכנים</h2>
+        <p class="text-gray-500 mb-10">הגישה למאגר מיועדת לצורך שידוכין בלבד. נא לשמור על סודיות.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- קישור לאקסל בנים -->
+            <a href="הכנס_כאן_קישור_לגוגל_שיטס_בנים" target="_blank" class="p-8 bg-blue-50 border-2 border-blue-900 rounded-xl hover:bg-blue-100 transition group">
+                <div class="text-4xl mb-3 group-hover:scale-110 transition">👨‍💼</div>
+                <h3 class="text-xl font-bold text-blue-900">מאגר בנים</h3>
+                <p class="text-sm opacity-60 mt-2 italic text-center">כולל נתונים, שאיפות רוחניות ותמונות</p>
+            </a>
+            
+            <!-- קישור לאקסל בנות -->
+            <a href="הכנס_כאן_קישור_לגוגל_שיטס_בנות" target="_blank" class="p-8 bg-orange-50 border-2 border-orange-900 rounded-xl hover:bg-orange-100 transition group">
+                <div class="text-4xl mb-3 group-hover:scale-110 transition">👩‍💼</div>
+                <h3 class="text-xl font-bold text-orange-900">מאגר בנות</h3>
+                <p class="text-sm opacity-60 mt-2 italic text-center">כולל נתונים, שאיפות רוחניות ותמונות</p>
+            </a>
+        </div>
+        
+        <button onclick="location.reload()" class="mt-12 text-gray-400 hover:text-red-500 transition text-sm">יציאה בטוחה מהמערכת</button>
+    </div>
+
+    <script>
+        function checkPass() {
+            const pass = document.getElementById('pass').value;
+            if(pass === "1234") { // הסיסמה היא 1234 - שנה אותה כאן
+                document.getElementById('loginBlock').classList.add('hidden');
+                document.getElementById('adminContent').classList.remove('hidden');
+            } else {
+                alert("סיסמה שגויה. פנה למנהל האתר.");
+            }
+        }
+    </script>
+</body>
+</html>
