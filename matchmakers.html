@@ -11,16 +11,18 @@
         .font-alef { font-family: 'Alef', sans-serif; }
         .modal { transition: opacity 0.25s ease; }
         body.modal-active { overflow: hidden; }
+        .card-item { display: none; } /* יופיעו רק אחרי טעינה */
     </style>
 </head>
 <body>
 
     <!-- דף כניסה (סיסמה) -->
-    <div id="loginBlock" class="h-screen flex items-center justify-center bg-slate-900 z-50 relative">
+    <div id="loginBlock" class="fixed inset-0 flex items-center justify-center bg-slate-900 z-50">
         <div class="bg-white p-10 rounded-2xl shadow-2xl w-80 text-center">
             <h2 class="text-2xl font-bold mb-6 text-slate-800 font-alef">כניסת שדכנים</h2>
             <input type="password" id="passInput" placeholder="סיסמה" class="w-full p-3 border rounded-lg mb-4 text-center outline-none focus:border-blue-500">
             <button onclick="login()" class="w-full bg-slate-800 text-white p-3 rounded-lg font-bold hover:bg-slate-700 transition">כניסה</button>
+            <p class="mt-4 text-xs text-gray-400">הגישה מורשית לצוות האתר בלבד</p>
         </div>
     </div>
 
@@ -31,143 +33,172 @@
             <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="flex items-center gap-2">
                     <span class="text-red-500 text-2xl">♥</span>
-                    <h1 class="text-2xl font-bold font-alef text-slate-800">ניהול מאגר "מלב אל לב"</h1>
+                    <h1 class="text-2xl font-bold font-alef text-slate-800 tracking-tight">ניהול מאגר "מלב אל לב"</h1>
                 </div>
                 <div class="flex gap-3">
-                    <button onclick="loadData('boys')" id="btnBoys" class="px-6 py-2 rounded-full border-2 border-blue-600 text-blue-600 font-bold hover:bg-blue-600 hover:text-white transition">מאגר בנים</button>
-                    <button onclick="loadData('girls')" id="btnGirls" class="px-6 py-2 rounded-full border-2 border-orange-600 text-orange-600 font-bold hover:bg-orange-600 hover:text-white transition">מאגר בנות</button>
+                    <button onclick="loadData('boys')" id="btnBoys" class="px-6 py-2 rounded-full border-2 border-blue-600 text-blue-600 font-bold hover:bg-blue-600 hover:text-white transition uppercase text-sm">מאגר בנים</button>
+                    <button onclick="loadData('girls')" id="btnGirls" class="px-6 py-2 rounded-full border-2 border-orange-600 text-orange-600 font-bold hover:bg-orange-600 hover:text-white transition uppercase text-sm">מאגר בנות</button>
+                    <button onclick="location.reload()" class="p-2 text-gray-400 hover:text-red-500">יציאה</button>
                 </div>
             </div>
         </header>
 
         <!-- Search & Filter -->
         <div class="container mx-auto p-6">
-            <div class="bg-white p-4 rounded-2xl shadow-sm mb-8">
-                <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="חיפוש לפי שם, עיר, מגזר או תכונות אופי..." class="w-full p-3 rounded-xl bg-slate-50 border-none outline-none focus:ring-2 focus:ring-blue-500">
+            <div class="bg-white p-4 rounded-2xl shadow-sm mb-8 flex items-center">
+                <span class="ml-3 text-gray-400">🔍</span>
+                <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="חיפוש חופשי (שם, עיר, מגזר, תכונות אופי...)" class="w-full bg-transparent border-none outline-none text-lg">
             </div>
             
             <div id="cardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="col-span-full text-center py-20 text-slate-400">אנא בחר מאגר (בנים/בנות) למעלה כדי להתחיל</div>
+                <div class="col-span-full text-center py-20 text-slate-400 font-medium">אנא בחר מאגר (בנים/בנות) למעלה כדי להציג את המועמדים</div>
             </div>
         </div>
     </div>
 
     <!-- Modal (חלון פרטים מלאים) -->
     <div id="detailsModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
-        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-        <div class="modal-container bg-white w-11/12 md:max-w-2xl mx-auto rounded-2xl shadow-lg z-50 overflow-y-auto max-h-[90vh]">
-            <div class="modal-content py-6 text-right px-8">
-                <div class="flex justify-between items-center pb-4 border-b">
-                    <p class="text-2xl font-bold text-slate-800 font-alef" id="modalName">שם המועמד</p>
-                    <button onclick="closeModal()" class="text-3xl">&times;</button>
+        <div class="modal-overlay absolute w-full h-full bg-slate-900 opacity-60" onclick="closeModal()"></div>
+        <div class="modal-container bg-white w-11/12 md:max-w-3xl mx-auto rounded-3xl shadow-2xl z-50 overflow-y-auto max-h-[90vh]">
+            <div class="modal-content text-right">
+                <!-- Modal Header -->
+                <div class="sticky top-0 bg-white p-6 border-b flex justify-between items-center rounded-t-3xl">
+                    <h3 class="text-2xl font-bold text-slate-800 font-alef" id="modalName">שם המועמד</h3>
+                    <button onclick="closeModal()" class="text-3xl text-gray-400 hover:text-black">&times;</button>
                 </div>
-                <div id="modalBody" class="py-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm leading-relaxed">
-                    <!-- הפרטים יוזרקו כאן -->
+                <!-- Modal Body -->
+                <div id="modalBody" class="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- הפרטים יוזרקו כאן ע"י ה-JS -->
                 </div>
             </div>
         </div>
     </div>
 
 <script>
-    // --- הגדרות - שנה רק כאן ---
+    // הקישורים הישירים שלך
     const CONFIG = {
-        boysUrl: 'כאן_מדביקים_את_הקישור_של_הבנים_בפורמט_CSV',
-        girlsUrl: 'כאן_מדביקים_את_הקישור_של_הבנות_בפורמט_CSV'
+        boysUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR5CrHwFf6vVg7PssOb4SFvU5pKec0uPsdwmBTsVz7uvjzOvTVQl0np3p2x56LG76dofUlBTshRnIiN/pub?output=csv',
+        girlsUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRtAsmyXqxQcA82L7ych_p_L1aAOfSkgsiC-iKY2den5g0uEE64NJxd3Nk8AIS7dTOslHATwy5AqgBE/pub?output=csv'
     };
 
-    let allData = []; // שומר את כל הנתונים שנטענו
+    let currentHeaders = [];
+    let currentData = [];
 
     function login() {
-        if(document.getElementById('passInput').value === '1234') {
+        const pass = document.getElementById('passInput').value;
+        if(pass === '1234') {
             document.getElementById('loginBlock').classList.add('hidden');
             document.getElementById('adminContent').classList.remove('hidden');
-        } else { alert('סיסמה שגויה'); }
+        } else {
+            alert('סיסמה שגויה למערכת');
+        }
+    }
+
+    // פונקציית עזר לפירוק שורת CSV בצורה בטוחה
+    function parseCSVLine(text) {
+        const result = [];
+        let cur = '';
+        let inQuote = false;
+        for (let i = 0; i < text.length; i++) {
+            let char = text[i];
+            if (char === '"') inQuote = !inQuote;
+            else if (char === ',' && !inQuote) {
+                result.push(cur.trim());
+                cur = '';
+            } else cur += char;
+        }
+        result.push(cur.trim());
+        return result;
     }
 
     async function loadData(type) {
         const container = document.getElementById('cardsContainer');
-        container.innerHTML = '<div class="col-span-full text-center py-20 italic">טוען נתונים מהאקסל...</div>';
+        container.innerHTML = '<div class="col-span-full text-center py-20 text-slate-500 animate-pulse">מתחבר למאגר הנתונים, נא להמתין...</div>';
         
         const url = type === 'boys' ? CONFIG.boysUrl : CONFIG.girlsUrl;
 
         try {
-            const response = await fetch(url);
-            const csvText = await response.text();
-            const rows = csvText.split('\n');
-            const headers = parseCSV(rows[0]); // שורת הכותרות בעברית
-            allData = rows.slice(1).map(row => parseCSV(row)).filter(r => r.length > 1);
+            const response = await fetch(url + '&cachebust=' + new Date().getTime());
+            const text = await response.text();
+            const lines = text.split(/\r?\n/);
+            
+            currentHeaders = parseCSVLine(lines[0]);
+            currentData = lines.slice(1).map(line => parseCSVLine(line)).filter(row => row.length > 1);
             
             container.innerHTML = '';
-            allData.forEach((cols, index) => {
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition card-item';
-                
-                // מיפוי בסיסי לכרטיס (מניח ששם זה עמודה 1, גיל 2, עיר 6, תמונה 9)
-                const name = cols[1] || 'ללא שם';
-                const age = cols[2] || '';
-                const city = cols[6] || '';
-                const img = cols[9] || 'https://via.placeholder.com/300?text=No+Photo';
+            
+            currentData.forEach((row, index) => {
+                // מיפוי לפי האינדקסים בטפסים שבנינו (שם:1, גיל:2, עיר:5/6, תמונה:9/10)
+                const name = row[1] || 'ללא שם';
+                const age = row[2] || '';
+                const sector = row[4] || '';
+                const city = row[6] || row[5] || '';
+                const photo = row[9] || row[7] || ''; // חיפוש תמונה בעמודה 9 או 7
 
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300 card-item block';
                 card.innerHTML = `
-                    <img src="${img}" class="w-full h-48 object-cover bg-slate-100" onerror="this.src='https://via.placeholder.com/300?text=No+Photo'">
-                    <div class="p-5 text-right">
-                        <h3 class="text-xl font-bold text-slate-800">${name}, ${age}</h3>
-                        <p class="text-slate-500 mb-4">${city}</p>
-                        <button onclick="openModal(${index}, ${JSON.stringify(headers).replace(/"/g, '&quot;')})" class="w-full py-2 bg-slate-800 text-white rounded-xl font-bold text-sm">לכל הפרטים</button>
+                    <div class="h-56 bg-slate-100 overflow-hidden relative">
+                        <img src="${photo}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x300?text=No+Photo'">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-slate-700 shadow-sm">${sector}</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-slate-800 mb-1">${name}, ${age}</h3>
+                        <p class="text-slate-500 text-sm mb-6 flex items-center gap-1">📍 ${city}</p>
+                        <button onclick="openModal(${index})" class="w-full py-3 bg-slate-800 text-white rounded-2xl font-bold text-sm hover:bg-slate-700 transition">לכל הפרטים</button>
                     </div>
                 `;
                 container.appendChild(card);
             });
         } catch (e) {
-            container.innerHTML = '<div class="col-span-full text-center py-20 text-red-500">שגיאה בטעינה. וודא שפרסמת את הגיליון כ-CSV.</div>';
+            container.innerHTML = '<div class="col-span-full text-center py-20 text-red-500 font-bold">שגיאה בגישה לקובץ האקסל. וודא שהקובץ פורסם כ-CSV לציבור.</div>';
         }
     }
 
-    function openModal(index, headers) {
-        const person = allData[index];
-        const modalBody = document.getElementById('modalBody');
+    function openModal(index) {
+        const row = currentData[index];
+        const body = document.getElementById('modalBody');
         const modalName = document.getElementById('modalName');
         
-        modalName.innerText = person[1];
-        modalBody.innerHTML = '';
+        modalName.innerText = row[1];
+        body.innerHTML = '';
 
-        // הצגת כל השדות שיש בהם תוכן
-        headers.forEach((header, i) => {
-            if(person[i] && person[i].trim() !== "" && !person[i].includes('http')) {
-                const item = document.createElement('div');
-                item.className = 'border-b border-slate-50 pb-2';
-                item.innerHTML = `<span class="font-bold text-slate-400 block text-xs">${header}</span> <span class="text-slate-700">${person[i]}</span>`;
-                modalBody.appendChild(item);
+        currentHeaders.forEach((header, i) => {
+            const val = row[i];
+            if (val && val.trim() !== "" && !val.startsWith('http')) {
+                const info = document.createElement('div');
+                info.className = 'bg-slate-50 p-4 rounded-2xl border border-slate-100';
+                info.innerHTML = `
+                    <span class="block text-xs font-bold text-slate-400 mb-1 leading-none uppercase">${header}</span>
+                    <span class="text-slate-700 font-medium">${val}</span>
+                `;
+                body.appendChild(info);
             }
         });
 
-        const modal = document.getElementById('detailsModal');
-        modal.style.opacity = "1";
-        modal.style.pointerEvents = "auto";
+        document.getElementById('detailsModal').classList.remove('opacity-0', 'pointer-events-none');
         document.body.classList.add('modal-active');
     }
 
     function closeModal() {
-        const modal = document.getElementById('detailsModal');
-        modal.style.opacity = "0";
-        modal.style.pointerEvents = "none";
+        document.getElementById('detailsModal').classList.add('opacity-0', 'pointer-events-none');
         document.body.classList.remove('modal-active');
     }
 
-    function parseCSV(row) {
-        // פונקציה חכמה שמפרקת שורה של CSV ומתעלמת מפסיקים בתוך מרכאות
-        if (!row) return [];
-        const matches = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
-        return matches ? matches.map(m => m.replace(/^"|"$/g, '')) : row.split(',');
+    function filterCards() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const cards = document.getElementsByClassName('card-item');
+        
+        Array.from(cards).forEach(card => {
+            const text = card.innerText.toLowerCase();
+            card.style.display = text.includes(query) ? 'block' : 'none';
+        });
     }
 
-    function filterCards() {
-        const q = document.getElementById('searchInput').value.toLowerCase();
-        const cards = document.getElementsByClassName('card-item');
-        for (let c of cards) {
-            c.style.display = c.innerText.toLowerCase().includes(q) ? 'block' : 'none';
-        }
-    }
+    // סגירת מודל בלחיצת ESC
+    document.onkeydown = function(evt) {
+        if (evt.keyCode == 27) closeModal();
+    };
 </script>
 </body>
 </html>
